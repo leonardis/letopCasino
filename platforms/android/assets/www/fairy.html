@@ -1,0 +1,723 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  <meta name="interface" content="desktop" />
+
+  <title>Fairy Land</title>
+
+  <!--link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'/-->
+  <link href="css/font.css" rel='stylesheet' type='text/css'/>
+  <link type="text/css" rel="stylesheet" href="css/reset.css" />
+  <link type="text/css" rel="stylesheet" href="css/fairy.css" />
+  <script src="phonegap.js"></script>
+  <script src="cordova.js"></script> 
+
+</head>
+<body>
+  <div id="viewport">
+    <!--div id="lines">
+        <canvas id="line1"></canvas>
+    </div-->
+    <div id="container">
+      <div id="header">
+        <img src="img/Fairy/banner.png" style="width:840px; height:60px; margin-left:-184px">
+      	<!--h1>BOOK OF RA!</h1-->
+      </div>
+
+      <div style="position: absolute; z-index: 9999999; visibility:hidden;" id="jackpot">
+        <img src="img/jackpot.png" style="width: 510px; margin-left: -17px; margin-top: 30px;">
+      </div>
+      <!--div class="blur">
+      </div-->
+      <div id="reels">
+      	<canvas id="canvas1" width="140" ></canvas>
+      	<canvas id="canvas2" width="140" ></canvas>
+      	<canvas id="canvas3" width="140" ></canvas>
+        <canvas id="canvas4" width="140" ></canvas>
+        <canvas id="canvas5" width="140" ></canvas>
+      	<div id="overlay">
+	        <div id="winline"></div>
+	      </div>
+
+      </div>
+      <div id="payTable" class="gamble" style="height:435px; position:absolute; width: 693px; margin-top: -435px; margin-left:-115px; z-index: 9999999; visibility:hidden;">
+        <img src="img/Fairy/payTable.jpg" style="width:100%; height: 100%; position:absolute">
+        <div style="position: absolute; width: 300px; height: 85px; margin-left: 115px; margin-top: 15px;">
+          <img src="img/Fairy/book.png" style="height:100%;">
+          <div style="display: inline-block; position:absolute; margin-top: 20px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">5x</p>
+            <p id="book5x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">10000</p>
+          </div>
+          <div style="display: inline-block; position:absolute; margin-top: 35px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">4x</p>
+            <p id="book4x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">1000</p>
+          </div>
+          <div style="display: inline-block; position:absolute; margin-top: 50px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">3x</p>
+            <p id="book3x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">200</p>
+          </div>
+        </div>
+
+        <div style="position: absolute; width: 300px; height: 85px; margin-top: 20px; right: -65px;">
+          <p style="color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px;">Sustituible por:</p>
+          <img src="img/Fairy/indi.png" style="height:30px; margin-left:8px;">
+          <img src="img/Fairy/far.png" style="height:30px;">
+          <img src="img/Fairy/raa.png" style="height:30px;">
+          <img src="img/Fairy/esc.png" style="height:30px;">
+          <br>
+          <img src="img/Fairy/a.png" style="height:30px; margin-left:-18px;">
+          <img src="img/Fairy/k.png" style="height:30px;">
+          <img src="img/Fairy/q.png" style="height:30px;">
+          <img src="img/Fairy/j.png" style="height:30px;">
+          <img src="img/Fairy/1q.png" style="height:30px;">
+        </div>
+
+        <div style="position: absolute; width: 300px; height: 85px; margin-left: 25px; margin-top: 125px;">
+          <img src="img/Fairy/indi.png" style="height:100%;">
+          <div style="display: inline-block; position:absolute; margin-top: 12px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">5x</p>
+            <p id="indi5x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">2500</p>
+          </div>
+          <div style="display: inline-block; position:absolute; margin-top: 27px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">4x</p>
+            <p id="indi4x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">500</p>
+          </div>
+          <div style="display: inline-block; position:absolute; margin-top: 42px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">3x</p>
+            <p id="indi3x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">200</p>
+          </div>
+          <div style="display: inline-block; position:absolute; margin-top: 57px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">2x</p>
+            <p id="indi2x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">50</p>
+          </div>
+        </div>
+
+        <div style="position: absolute; width: 220px; height: 85px; right:-20px; margin-top: 125px;">
+          <div style="display: inline-block; position:absolute; margin-top: 12px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">5x</p>
+            <p id="far5x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">500</p>
+          </div>
+          <div style="display: inline-block; position:absolute; margin-top: 27px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">4x</p>
+            <p id="far4x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">200</p>
+          </div>
+          <div style="display: inline-block; position:absolute; margin-top: 42px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">3x</p>
+            <p id="far3x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">50</p>
+          </div>
+          <div style="display: inline-block; position:absolute; margin-top: 57px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">2x</p>
+            <p id="far2x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">10</p>
+          </div>
+          <img src="img/Fairy/far.png" style="height:100%; margin-left:100px;">
+        </div>
+
+        <div style="color:#E6FE03; text-shadow: 1px 0px 2px #000; font-size:20px; position:absolute; text-align: center; margin-left: 260px; margin-top: 180px;">
+          <p style="margin-bottom:10px;">10 juego gratis </p>
+          <p style="margin-bottom:10px;">al conseguir </p>
+          <p >4 </p> <img src="img/Fairy/book.png" style="height:30px;">
+        </div>
+
+        <div style="position: absolute; width: 300px; height: 85px; margin-left: 10px; margin-top: 230px;">
+          <img src="img/Fairy/raa.png" style="height: calc(100% + 20px); margin-top: -17px;">
+          <div style="display: inline-block; position:absolute; margin-top: 12px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">5x</p>
+            <p id="raa5x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">200</p>
+          </div>
+          <div style="display: inline-block; position:absolute; margin-top: 27px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">4x</p>
+            <p id="raa4x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">50</p>
+          </div>
+          <div style="display: inline-block; position:absolute; margin-top: 42px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">3x</p>
+            <p id="raa3x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">20</p>
+          </div>
+          <div style="display: inline-block; position:absolute; margin-top: 57px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">2x</p>
+            <p id="raa2x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">5</p>
+          </div>
+        </div>
+
+        <div style="position: absolute; width: 220px; height: 85px; right:-20px; margin-top: 230px;">
+          <div style="display: inline-block; position:absolute; margin-top: 12px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">5x</p>
+            <p id="esc5x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">200</p>
+          </div>
+          <div style="display: inline-block; position:absolute; margin-top: 27px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">4x</p>
+            <p id="esc4x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">20</p>
+          </div>
+          <div style="display: inline-block; position:absolute; margin-top: 42px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">3x</p>
+            <p id="esc3x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">10</p>
+          </div>
+          <div style="display: inline-block; position:absolute; margin-top: 57px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">2x</p>
+            <p id="esc2x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">5</p>
+          </div>
+          <img src="img/Fairy/esc.png" style="height:100%; margin-left:100px;">
+        </div>
+
+        <div style="position: absolute; width: 300px; height: 85px; margin-left: 130px; margin-top: 335px;">
+          <img src="img/Fairy/a.png" style="height: calc(100% - 20px); margin-left: -40px; position: absolute;">
+          <img src="img/Fairy/k.png" style="height: calc(100% - 20px); position:absolute; margin-top: 20px; margin-left: 5px; ">
+          <div style="display: inline-block; position:absolute; margin-top: 20px; margin-left: 75px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">5x</p>
+            <p id="ak5x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">100</p>
+          </div>
+          <div style="display: inline-block; position:absolute; margin-top: 35px; margin-left: 75px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">4x</p>
+            <p id="ak4x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">20</p>
+          </div>
+          <div style="display: inline-block; position:absolute; margin-top: 50px; margin-left: 75px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">3x</p>
+            <p id="ak3x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">10</p>
+          </div>
+        </div>
+
+        <div style="position: absolute; width: 220px; height: 85px; right:100px; margin-top: 335px;">
+          <div style="display: inline-block; position:absolute; margin-top: 20px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">5x</p>
+            <p id="1qqj5x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">100</p>
+          </div>
+          <div style="display: inline-block; position:absolute; margin-top: 35px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">4x</p>
+            <p id="1qqj4x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">10</p>
+          </div>
+          <div style="display: inline-block; position:absolute; margin-top: 50px;">
+            <p style="display: inline-block; color:white; margin-left:10px; text-shadow: 1px 0px 2px #000;">3x</p>
+            <p id="1qqj3x" style="display: inline-block; color:#E6FE03; text-shadow:#000 0px 0px 1px , #000 0px 0px 1px; width:50px; text-align:center;">5</p>
+          </div>
+          <img src="img/Fairy/1q.png" style="height:calc(100% - 20px); margin-left:100px; position: absolute; margin-top:20px;">
+          <img src="img/Fairy/q.png" style="height:calc(100% - 20px); margin-left:145px; position: absolute;">
+          <img src="img/Fairy/j.png" style="height:calc(100% - 20px); margin-left:175px; margin-top:15px;">
+        </div>
+
+      </div>
+
+      <div id="gamble" class="gamble" style="height:435px; position:absolute; background-image:url(img/Fairy/gamble.jpg); width: 693px; margin-top: -435px; margin-left:-115px; z-index: 9999999; visibility:hidden;">
+
+          <div style="text-align:center; margin-left: 50px; margin-top: 25px; position: absolute;">
+            <p style="color:white;">Monto a arriesgar</p>
+            <p id="gambleAmount" style="color:yellow;">0</p>
+          </div>
+
+          <div style="right:0; text-align:center; margin-right: 50px; margin-top: 25px; position: absolute;">
+            <p style="color:white;">Monto a ganar</p>
+            <p id="gWinAmount" style="color:yellow;">0</p>
+          </div>
+
+          <p style="color:white; margin-top: 100px; position: absolute; margin-left: 150px;">Cartas previas</p>
+
+          <div id="black" style="width: 130px; position: absolute; margin-top: calc(50% - 150px); margin-left: calc(50% - 270px); cursor:pointer; color:wheat;">
+            <img src="img/Fairy/black.png" style="width:100%;">
+            <p href="#" style="position: absolute;margin-top: -60px; margin-left: 33px;">NEGRO</p>
+          </div>
+
+          <div id="red" style="width: 130px; position: absolute; right:0; margin-top: calc(50% - 150px); margin-right: calc(50% - 290px); cursor:pointer; color:wheat;">
+            <img src="img/Fairy/red.png" style="width:100%;">
+            <p href="#" style="position: absolute;margin-top: -60px; margin-left: 40px;">ROJO</p>
+          </div>
+
+          <div class="card" style="width:150px; margin-left: calc(50% - 65px); margin-top: calc(50% - 180px);">
+            <img id="bigCard" class="card1" src="img/Fairy/card_cent.png" style="width:100%; vertical-align: middle;">
+
+          </div>
+          <div id="filter" class="supRed"></div>
+
+          <p style="bottom:0; color: white; position: absolute; margin-bottom: 10px; margin-left: 170px; font-size: 14px;">Escoja rojo o negro para arriesgar y ganar</p>
+          
+
+          <div style="position: absolute; top: 0; right: 20px; margin-top: 70px;">
+            <ul><li>
+            <div class="card" style="width: 50px;">
+              <img id="card1" value="hearth" src="img/Fairy/card_hearth.png" style="width:100%">
+            </div></li>
+            <li>
+            <div class="card" style="width: 50px;">
+              <img id="card2" value="dia" src="img/Fairy/card_dia.png" style="width:100%">
+            </div></li>
+            <li>
+            <div class="card" style="width: 50px;">
+              <img id="card3" value="hearth" src="img/Fairy/card_hearth.png" style="width:100%">
+            </div></li>
+            <li>
+            <div class="card" style="width: 50px;">
+              <img id="card4" value="pica" src="img/Fairy/card_pica.png" style="width:100%">
+            </div></li>
+            <li>
+            <div class="card" style="width: 50px;">
+              <img id="card5" value="trebol" src="img/Fairy/card_trebol.png" style="width:100%">
+            </div></li></ul>
+
+          </div>
+      </div>
+
+      <div id="divBonusImage" class="bonusImage" style="height:200px; position:absolute; background-image:url(img/BookOfRa/gamble.jpg); width: 300px; margin-top: -322px; margin-left:75px; z-index: 9999999; visibility:hidden;">
+
+          <p style="color:white; text-align:center; margin-top:20%;">Tiene 10 juegos gratis y su imagen de bonus es:</p>
+          <img id="bonusImage" src="img/Fairy/book.png" style="width: 70px; margin-left: calc(50% - 35px);margin-top: 10px;" >
+          
+      </div>
+
+      <div id="sombra" style="height:435px; position:absolute; background:rgba(0, 0, 0, 0.58) none repeat scroll 0% 0%; width: 693px; margin-top: -435px; margin-left:-115px; z-index: 9999999; visibility:hidden;">
+      </div>
+
+      <div class="bonus">
+        <img src="" class="bonusImg" id="bonus11" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: -107px; margin-top: 205px; height: 140px; visibility: hidden; background:rgba(0, 0, 0, 0.58) none repeat scroll 0% 0%;">
+        <img src="" class="bonusImg" id="bonus12" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 29px; margin-top: 205px; height: 140px; visibility: hidden; background:rgba(0, 0, 0, 0.58) none repeat scroll 0% 0%;">
+        <img src="" class="bonusImg" id="bonus13" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 167px; margin-top: 205px; height: 140px; visibility: hidden; background:rgba(0, 0, 0, 0.58) none repeat scroll 0% 0%;">
+        <img src="" class="bonusImg" id="bonus14" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 303px; margin-top: 205px; height: 140px; visibility: hidden; background:rgba(0, 0, 0, 0.58) none repeat scroll 0% 0%;">
+        <img src="" class="bonusImg" id="bonus15" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 440px; margin-top: 205px; height: 140px; visibility: hidden; background:rgba(0, 0, 0, 0.58) none repeat scroll 0% 0%;">
+        <img src="" class="bonusImg" id="bonus21" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: -107px; margin-top: 65px; height: 140px; visibility: hidden; background:rgba(0, 0, 0, 0.58) none repeat scroll 0% 0%;">
+        <img src="" class="bonusImg" id="bonus22" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 29px; margin-top: 65px; height: 140px; visibility: hidden; background:rgba(0, 0, 0, 0.58) none repeat scroll 0% 0%;">
+        <img src="" class="bonusImg" id="bonus23" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 167px; margin-top: 65px; height: 140px; visibility: hidden; background:rgba(0, 0, 0, 0.58) none repeat scroll 0% 0%;">
+        <img src="" class="bonusImg" id="bonus24" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 303px; margin-top: 65px; height: 140px; visibility: hidden; background:rgba(0, 0, 0, 0.58) none repeat scroll 0% 0%;">
+        <img src="" class="bonusImg" id="bonus25" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 440px; margin-top: 65px; height: 140px; visibility: hidden; background:rgba(0, 0, 0, 0.58) none repeat scroll 0% 0%;">
+        <img src="" class="bonusImg" id="bonus31" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: -107px; margin-top: 345px; height: 140px; visibility: hidden; background:rgba(0, 0, 0, 0.58) none repeat scroll 0% 0%;">
+        <img src="" class="bonusImg" id="bonus32" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 29px; margin-top: 345px; height: 140px; visibility: hidden; background:rgba(0, 0, 0, 0.58) none repeat scroll 0% 0%;">
+        <img src="" class="bonusImg" id="bonus33" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 167px; margin-top: 345px; height: 140px; visibility: hidden; background:rgba(0, 0, 0, 0.58) none repeat scroll 0% 0%;">
+        <img src="" class="bonusImg" id="bonus34" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 303px; margin-top: 345px; height: 140px; visibility: hidden; background:rgba(0, 0, 0, 0.58) none repeat scroll 0% 0%;">
+        <img src="" class="bonusImg" id="bonus35" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 440px; margin-top: 345px; height: 140px; visibility: hidden; background:rgba(0, 0, 0, 0.58) none repeat scroll 0% 0%;">
+      </div>
+
+      <div class="noWin">
+        <img src="" class="noWinImg2" id="noWin12" style="width: 120px; position: absolute; top: 0px; z-index: 9999999; margin-left: 29px; margin-top: 205px; height: 130px; visibility: hidden; background-image: url('img/BookOfRa/back_sprint.png'); padding:5px;">
+        <img src="" class="noWinImg3" id="noWin13" style="width: 120px; position: absolute; top: 0px; z-index: 9999999; margin-left: 167px; margin-top: 205px; height: 130px; visibility: hidden; background-image: url('img/BookOfRa/back_sprint.png'); padding:5px;" >
+        <img src="" class="noWinImg4" id="noWin14" style="width: 120px; position: absolute; top: 0px; z-index: 9999999; margin-left: 303px; margin-top: 205px; height: 130px; visibility: hidden; background-image: url('img/BookOfRa/back_sprint.png'); padding:5px;" >
+        <img src="" class="noWinImg5" id="noWin15" style="width: 120px; position: absolute; top: 0px; z-index: 9999999; margin-left: 440px; margin-top: 205px; height: 130px; visibility: hidden; background-image: url('img/BookOfRa/back_sprint.png'); padding:5px;" >
+        <img src="" class="noWinImg1" id="noWin11" style="width: 120px; position: absolute; top: 0px; z-index: 9999999; margin-left: -107px; margin-top: 205px; height: 130px; visibility: hidden; background-image: url('img/BookOfRa/back_sprint.png'); padding:5px;" >
+        <img src="" class="noWinImg1" id="noWin21" style="width: 120px; position: absolute; top: 0px; z-index: 9999999; margin-left: -107px; margin-top: 65px; height: 130px; visibility: hidden; background-image: url('img/BookOfRa/back_sprint.png'); padding:5px;" >
+        <img src="" class="noWinImg2" id="noWin22" style="width: 120px; position: absolute; top: 0px; z-index: 9999999; margin-left: 29px; margin-top: 65px; height: 130px; visibility: hidden; background-image: url('img/BookOfRa/back_sprint.png'); padding:5px;">
+        <img src="" class="noWinImg3" id="noWin23" style="width: 120px; position: absolute; top: 0px; z-index: 9999999; margin-left: 167px; margin-top: 65px; height: 130px; visibility: hidden; background-image: url('img/BookOfRa/back_sprint.png'); padding:5px;" >
+        <img src="" class="noWinImg4" id="noWin24" style="width: 120px; position: absolute; top: 0px; z-index: 9999999; margin-left: 303px; margin-top: 65px; height: 130px; visibility: hidden; background-image: url('img/BookOfRa/back_sprint.png'); padding:5px;" >
+        <img src="" class="noWinImg5" id="noWin25" style="width: 120px; position: absolute; top: 0px; z-index: 9999999; margin-left: 440px; margin-top: 65px; height: 130px; visibility: hidden; background-image: url('img/BookOfRa/back_sprint.png'); padding:5px;" >
+        <img src="" class="noWinImg1" id="noWin31" style="width: 120px; position: absolute; top: 0px; z-index: 9999999; margin-left: -107px; margin-top: 345px; height: 130px; visibility: hidden; background-image: url('img/BookOfRa/back_sprint.png'); padding:5px;" >
+        <img src="" class="noWinImg2" id="noWin32" style="width: 120px; position: absolute; top: 0px; z-index: 9999999; margin-left: 29px; margin-top: 345px; height: 130px; visibility: hidden; background-image: url('img/BookOfRa/back_sprint.png'); padding:5px;">
+        <img src="" class="noWinImg3" id="noWin33" style="width: 120px; position: absolute; top: 0px; z-index: 9999999; margin-left: 167px; margin-top: 345px; height: 130px; visibility: hidden; background-image: url('img/BookOfRa/back_sprint.png'); padding:5px;" >
+        <img src="" class="noWinImg4" id="noWin34" style="width: 120px; position: absolute; top: 0px; z-index: 9999999; margin-left: 303px; margin-top: 345px; height: 130px; visibility: hidden; background-image: url('img/BookOfRa/back_sprint.png'); padding:5px;" >
+        <img src="" class="noWinImg5" id="noWin35" style="width: 120px; position: absolute; top: 0px; z-index: 9999999; margin-left: 440px; margin-top: 345px; height: 130px; visibility: hidden; background-image: url('img/BookOfRa/back_sprint.png'); padding:5px;" >
+      </div>
+
+      <div class="win">
+        <img src="img/Fairy/win1.png"  id="win11" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: -107px; margin-top: 204px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win1.png" id="win12" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 29px; margin-top: 204px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win1.png" id="win13" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 167px; margin-top: 204px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win1.png" id="win14" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 303px; margin-top: 204px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win1.png" id="win15" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 440px; margin-top: 204px; height: 143px; visibility: hidden;">
+      </div>
+
+      <div class="win">
+        <img src="img/Fairy/win2.png" id="win21" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: -107px; margin-top: 65px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win2.png" id="win22" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 29px; margin-top: 65px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win2.png" id="win23" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 167px; margin-top: 65px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win2.png" id="win24" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 303px; margin-top: 65px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win2.png" id="win25" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 440px; margin-top: 65px; height: 143px; visibility: hidden;">
+      </div>
+
+      <div class="win">
+        <img src="img/Fairy/win3.png" id="win31" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: -107px; margin-top: 343px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win3.png" id="win32" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 29px; margin-top: 343px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win3.png" id="win33" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 167px; margin-top: 343px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win3.png" id="win34" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 303px; margin-top: 343px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win3.png" id="win35" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 440px; margin-top: 343px; height: 143px; visibility: hidden;">
+      </div>
+
+      <div class="win">
+        <img src="img/Fairy/win4.png" id="win41" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: -107px; margin-top: 65px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win4.png" id="win42" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 29px; margin-top: 204px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win4.png" id="win43" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 167px; margin-top: 343px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win4.png" id="win44" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 303px; margin-top: 204px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win4.png" id="win45" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 440px; margin-top: 65px; height: 143px; visibility: hidden;">
+      </div>
+
+      <div class="win">
+        <img src="img/Fairy/win5.png" id="win51" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: -107px; margin-top: 343px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win5.png" id="win52" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 29px; margin-top: 204px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win5.png" id="win53" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 167px; margin-top: 65px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win5.png" id="win54" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 303px; margin-top: 204px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win5.png" id="win55" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 440px; margin-top: 343px; height: 143px; visibility: hidden;">
+      </div>
+
+      <div class="win">
+        <img src="img/Fairy/win6.png" id="win61" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: -107px; margin-top: 204px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win6.png" id="win62" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 29px; margin-top: 343px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win6.png" id="win63" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 167px; margin-top: 343px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win6.png" id="win64" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 303px; margin-top: 343px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win6.png" id="win65" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 440px; margin-top: 204px; height: 143px; visibility: hidden;">
+      </div>
+
+      <div class="win">
+        <img src="img/Fairy/win7.png" id="win71" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: -107px; margin-top: 204px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win7.png" id="win72" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 29px; margin-top: 65px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win7.png" id="win73" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 167px; margin-top: 65px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win7.png" id="win74" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 303px; margin-top: 65px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win7.png" id="win75" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 440px; margin-top: 204px; height: 143px; visibility: hidden;">
+      </div>
+
+      <div class="win">
+        <img src="img/Fairy/win8.png" id="win81" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: -107px; margin-top: 343px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win8.png" id="win82" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 29px; margin-top: 343px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win8.png" id="win83" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 167px; margin-top: 204px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win8.png" id="win84" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 303px; margin-top: 65px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win8.png" id="win85" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 440px; margin-top: 65px; height: 143px; visibility: hidden;">
+      </div>
+
+      <div class="win">
+        <img src="img/Fairy/win9.png" id="win91" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: -107px; margin-top: 65px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win9.png" id="win92" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 29px; margin-top: 65px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win9.png" id="win93" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 167px; margin-top: 204px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win9.png" id="win94" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 303px; margin-top: 343px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win9.png" id="win95" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 440px; margin-top: 343px; height: 143px; visibility: hidden;">
+      </div>
+
+      <div class="win">
+        <img src="img/Fairy/win10.png" id="win101" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: -107px; margin-top: 343px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win10.png" id="win102" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 29px; margin-top: 204px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win10.png" id="win103" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 167px; margin-top: 204px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win10.png" id="win104" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 303px; margin-top: 204px; height: 143px; visibility: hidden;">
+        <img src="img/Fairy/win10.png" id="win105" style="width: 130px; position: absolute; top: 0px; z-index: 9999999; margin-left: 440px; margin-top: 65px; height: 143px; visibility: hidden;">
+      </div>
+
+	      <!--div id="results">
+	        <div id="score">
+	          <span id="multiplier">0</span> x <img src="img/iron.png"/>
+	        </div>
+	        <div id="status"></div>
+	      </div>
+      </div-->
+      <div id="lines">
+          <img src="img/Fairy/1.png" id="uno" class="lines">
+          <img src="img/Fairy/2.png" id="dos" class="lines">
+          <img src="img/Fairy/3.png" id="tres" class="lines">
+          <img src="img/Fairy/4.png" id="cuatro" class="lines">
+          <img src="img/Fairy/5.png" id="cinco" class="lines">
+          <img src="img/Fairy/6.png" id="seis" class="lines">
+          <img src="img/Fairy/7.png" id="siete" class="lines">
+          <img src="img/Fairy/8.png" id="ocho" class="lines">
+          <img src="img/Fairy/9.png" id="nueve" class="lines">
+          <img src="img/Fairy/10.png" id="diez" class="lines">
+      </div>
+      <div id = "typos" style="margin-left:-163px; margin-top:-395px; float:left;">
+        <!--div style="width:25px; background-image:"></div-->
+        <!--img src="img/Alcatraz/cont_4.png"-->
+        <!--div>
+          <img src="img/Alcatraz/cont_4.png">
+          <p>4</p>
+        </div-->
+        <div class="numbers four" style="width:37px; height:25px;"><p style="color: orange; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">4</p></div>
+        <div class="numbers two" style="width:37px; height:25px;"><p style="color: green; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">2</p></div>
+        <div class="numbers nine" style="width:37px; height:25px;"><p style="color: purple; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">9</p></div>
+        <div class="numbers six" style="width:37px; height:25px;"><p style="color: wheat; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">6</p></div>
+        <div class="numbers one" style="width:37px; height:25px;"><p style="color: darkred; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">1</p></div>
+        <div class="numbers seven" style="width:37px; height:25px;"><p style="color: darkblue; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">7</p></div>
+        <div class="numbers eight" style="width:37px; height:25px;"><p style="color: darkgreen; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">8</p></div>
+        <div class="numbers three" style="width:37px; height:25px;"><p style="color: chocolate; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">3</p></div>
+        <div class="numbers five" style="width:37px; height:25px;"><p style="color: violet; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">5</p></div>
+        <div class="numbers ten" style="width:37px; height:25px;;"><p style="color: yellow; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">10</p></div>
+      </div>
+
+      <div id = "typos" style="margin-right:71px; margin-top:-430px; float:right;">
+        <div class="numbers ten" style="width:37px; height:25px;"><p style="color: yellow; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">10</p></div>
+        <div class="numbers four" style="width:37px; height:25px;"><p style="color: orange; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">4</p></div>
+        <div class="numbers two" style="width:37px; height:25px;"><p style="color: green; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">2</p></div>
+        <div class="numbers eight" style="width:37px; height:25px;"><p style="color: darkgreen; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">8</p></div>
+        <div class="numbers six" style="width:37px; height:25px;"><p style="color: wheat; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">6</p></div>
+        <div class="numbers one" style="width:37px; height:25px;"><p style="color: darkred; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">1</p></div>
+        <div class="numbers seven" style="width:37px; height:25px;"><p style="color: darkblue; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">7</p></div>
+        <div class="numbers nine" style="width:37px; height:25px;"><p style="color: purple; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">9</p></div>
+        <div class="numbers three" style="width:37px; height:25px;"><p style="color: chocolate; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">3</p></div>
+        <div class="numbers five" style="width:37px; height:25px;"><p style="color: violet; text-shadow: 2px 2px 2px rgb(9, 9, 9); font-size: 22px;">5</p></div>
+      </div>
+
+      <div id="back" style="position: absolute; right: -73px; top: 10px; cursor:pointer;">
+        <p style="color: white; position: absolute; margin-left: 17px; margin-top: 10px;">X</p>
+        <img style="width: 50px;" src="img/Fairy/btn_blue.png">
+      </div>
+      <div style="position: absolute; right: -70px; top: 60px; cursor:pointer; color:white; text-align:center; font-size:13px;">
+        <p>Juegos Gratis</p>
+        <p id="numberGames">0</p>
+      </div>
+
+      <div id="reload" style="position: absolute; left: -260px; top: 10px; cursor:pointer;">
+        <p style="color: white; position: absolute; margin-left: 17px; margin-top: 10px;">R</p>
+        <img style="width: 50px;" src="img/Fairy/btn_yellow.png">
+      </div>
+
+      <table style="margin-left:-179px; width: 830px;">
+        <tbody>
+          <tr>
+            <td rowspan="2" colspan="10" ><p id="messages" class="msg" style="margin-right:5px;">Por favor realice su apuesta</p></td>
+            <td rowspan="3" class="button button-default" id="auto"><p >Automatico</p></td>
+          </tr>
+          <tr>
+          </tr>
+          <tr>
+            <td style="width:110px;"><p class="peque" style="width: 105px;">Creditos</p></td>
+            <td colspan="3" style="padding-left: 6px;"><p class="peque" style="width:100px;">Lineas</p></td>
+            <td colspan="3" style="padding-left: 10px;"><p class="peque" style="width:110px;">Apuesta/Linea</p></td>
+            <td style="padding-left: 3px;"><p class="peque" style="width:60px;" id="newAuto">Apuesta</p></td>
+          </tr>
+          <tr>
+            <td ><p id="credits" class="data" style="width: 110px; text-align:right; padding-right:5px;">0</p></td>
+            <td style="width:30px; padding: 0 3px 0 5px;"><div id="lineMinus" class="button button-default" style="height:30px; line-height:30px;" role="menu">-</div></td>
+            <td style="width:45px;"><p id="lineas" class="data" >10</p></td>
+            <td style="width:30px; padding: 0 0 0 3px;"><div id="lineMore" class="button button-default" style="height:30px; line-height:30px;" role="menu">+</div></td>
+            <td style="width:30px; padding: 0 3px 0 5px;"><div id="betMinus" class="button button-disable" style="height:30px; line-height:30px;" role="menu">-</div></td>
+            <td style="width:65px;"><p id="bet" class="data" >10</p></td>
+            <td style="width:30px; padding: 0 0 0 3px;"><div id="betMore" class="button button-default" style="height:30px; line-height:30px;" role="menu">+</div></td>
+            <td style="width:65px; padding: 0 0 0 5px;"><p id="totalBet" class="data">0</p></td>
+            <td style="width: 120px; padding: 0px 5px;"><div id="table" class="button button-default" style="height:30px; line-height:30px;" role="menu">Tabla</div></td>  
+            <td style="width: 120px; padding: 0px 5px 0px 0px;"><div id="gambleBtn" class="button button-disable others" style="height:30px; line-height:30px;" role="menu">Riesgo</div></td>
+            <td ><div id="play" class="button button-default others" style="height:30px; line-height:30px;;">Jugar</div></td>           
+          </tr>
+        </tbody>
+      </table>
+      <!--div id="bottom">
+        <div id="letra">
+          <h3 id="messages">Por favor realice su apuesta</h3>
+          <h5 style="width: 100px; margin-left: -146px; margin-top: 1px;">Creditos</h5>
+          <h5 style="width: 65px; margin-top: -13px; margin-left: 90px;">Lineas</h5>
+          <h5 style="width: 85px; margin-top: -13px; margin-left: 175px;">Apuesta/Linea</h5>
+          <h5 style="width: 55px; margin-top: -13px; margin-left: 275px;">Apuesta</h5>
+          <h3 id="credits" style="width:110px; height:20px; line-height:30px; margin-top: 1px; text-align:right; padding-right:5px;">0</h3>
+          <h3 id="lineas" style="width:45px; height:20px; line-height:30px; margin-top: -30px; text-align:center; margin-left:-11px;">10</h3>
+          <h3 id="bet" style="width: 65px; height:20px; line-height:30px; margin-left:91px; text-align:center;">1</h3>
+          <!-h3 id="lineas" style="width: 25px; height:20px; line-height:30px; margin-top: -30px; margin-left:34px; text-align:center;">10</h3>
+          <h3 id="credits" style="width: 110px; height:20px; line-height:30px; margin-top: 1px; text-align:right; padding-right:5px;">0</h3>
+          <h3 id="lineas" style="width: 25px; height:20px; line-height:30px; margin-top: -30px; margin-left:34px; text-align:center;">10</h3>
+          <h3 id="bet" style="width: 65px; height:20px; line-height:30px; margin-top: -30px; margin-left:91px; text-align:center;">1</h3>
+          <h3 id="totalBet" style="width: 65px; height:20px; line-height:30px; margin-top: -30px; margin-left:190px; text-align:center;">10</h3>
+        </div>
+        <div id="buttons">
+          <div id="auto" class="button button-default" style="width:130px; margin-left:505px; margin-bottom:35px;">Automatico</div>
+          <div id="play" class="button button-default" style="width:130px; margin-left:505px;">Jugar</div>
+          <div id="play" class="button button-default" style="width:130px; margin-left:368px;">Apostador</div>
+          <div id="play" class="button button-default" style="width:130px; margin-left:231px;">Paytable</div>
+          <!-div id="lineMinus" class="button button-default" style="height:29px; line-height:30px; width:20px; margin-left:-35px; margin-top:-33px;">-</div>
+          <div id="lineMore" class="button button-default" style="height:28px; line-height:30px; width:20px; margin-left:36px; margin-top:-31px;">+</div>
+          <div id="betMinus" class="button button-default" style="height:28px; line-height:30px; width:20px; margin-left:63px; margin-top:-30px;">-</div->
+
+        </div>
+        <!-div id="buttons">
+          <div id="auto" class="button button-default" style="width:130px; margin-left:505px; margin-bottom:35px;">Automatico</div>
+          <div id="play" class="button button-default" style="width:130px; margin-left:505px;">Jugar</div>
+          <div id="play" class="button button-default" style="width:130px; margin-left:368px;">Apostador</div>
+          <div id="play" class="button button-default" style="width:130px; margin-left:231px;">Paytable</div>
+          <div id="lineMinus" class="button button-default" style="height:28px; line-height:30px; width:20px; margin-left:-35px; margin-top:-32px;">-</div>
+          <!-div id="lineMore" class="button button-default" style="height:28px; line-height:30px; width:20px; margin-left:38px; margin-top:-32px;">+</div>
+          <div id="betMore" class="button button-default" style="height:28px; line-height:30px; width:20px; margin-left:162px; margin-top:-32px;">+</div>
+          <div id="betMinus" class="button button-default" style="height:28px; line-height:30px; width:20px; margin-left:63px; margin-top:-32px;">-</div>
+        </di->
+      </div-->
+    </div>
+    
+    <!--div style="margin-top: 65px; color:white;">
+      <p>Id Usuario</p>
+      <input type="text" id="usuario" style="width: 100px;"><br>
+      <input id="setId" type="button" value="Set ID"/>
+    </div-->
+    
+    <!--input id="debug" type="button" value="Toggle Reels"/-->
+  </div>
+      <!--div id="bottom">
+        <div id="letra">
+          <h3 id="messages">Por favor realice su apuesta</h3>
+          <h5 style="width: 100px; margin-left: -146px; margin-top: 1px;">Creditos</h5>
+          <h5 style="width: 65px; margin-top: -13px; margin-left: 90px;">Lineas</h5>
+          <h5 style="width: 85px; margin-top: -13px; margin-left: 175px;">Apuesta/Linea</h5>
+          <h5 style="width: 55px; margin-top: -13px; margin-left: 275px;">Apuesta</h5>
+          <h3 id="credits" style="width: 110px; height:20px; line-height:30px; margin-top: 1px; text-align:right; padding-right:5px;">0</h3>
+          <h3 id="lineas" style="width: 25px; height:20px; line-height:30px; margin-top: -30px; margin-left:34px; text-align:center;">10</h3>
+          <h3 id="bet" style="width: 65px; height:20px; line-height:30px; margin-top: -30px; margin-left:91px; text-align:center;">1</h3>
+          <h3 id="totalBet" style="width: 65px; height:20px; line-height:30px; margin-top: -30px; margin-left:190px; text-align:center;">10</h3>
+        </div>
+      </div-->
+
+      <!--div id="bottom">
+        <div id="letra">
+          <h3 id="messages">Por favor realice su apuesta</h3>
+          <h5 style="width: 100px; margin-left: -146px; margin-top: 1px;">Creditos</h5>
+          <h5 style="width: 65px; margin-top: -13px; margin-left: 90px;">Lineas</h5>
+          <h5 style="width: 85px; margin-top: -13px; margin-left: 175px;">Apuesta/Linea</h5>
+          <h5 style="width: 55px; margin-top: -13px; margin-left: 275px;">Apuesta</h5>
+          <h3 id="credits" style="width: 110px; height:20px; line-height:30px; margin-top: 1px; text-align:right; padding-right:5px;">0</h3>
+          <h3 id="lineas" style="width: 25px; height:20px; line-height:30px; margin-top: -30px; margin-left:34px; text-align:center;">10</h3>
+          <h3 id="bet" style="width: 65px; height:20px; line-height:30px; margin-top: -30px; margin-left:91px; text-align:center;">1</h3>
+          <h3 id="totalBet" style="width: 65px; height:20px; line-height:30px; margin-top: -30px; margin-left:190px; text-align:center;">10</h3>
+        </div>
+        <!div id="buttons">
+          <div id="auto" class="button button-default" style="width:130px; margin-left:505px; margin-bottom:35px;">Automatico</div>
+          <div id="play" class="button button-default" style="width:130px; margin-left:505px; margin-bottom:0px;">Jugar</div>
+          <div id="play" class="button button-default" style="width:130px; margin-left:368px; margin-bottom:0px;">Apostador</div>
+          <div id="play" class="button button-default" style="width:130px; margin-left:231px; margin-bottom:0px;">Paytable</div>
+          <div id="lineMinus" class="button button-default" style="height:28px; line-height:30px; width:20px; margin-left:-35px; margin-top:-32px;">-</div>
+          <div id="lineMore" class="button button-default" style="height:28px; line-height:30px; width:20px; margin-left:38px; margin-top:-32px;">+</div>
+          <div id="betMore" class="button button-default" style="height:28px; line-height:30px; width:20px; margin-left:162px; margin-top:-32px;">+</div>
+          <div id="betMinus" class="button button-default" style="height:28px; line-height:30px; width:20px; margin-left:63px; margin-top:-32px;">-</div>
+        </div>
+      </div>
+      <div id = "typos" style="margin-left:-70px; margin-top:-298px; float:left;">
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">4</div>
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">2</div>
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">9</div>
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">6</div>
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">1</div>
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">7</div>
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">8</div>
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">3</div>
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">5</div>
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">10</div>
+      </div>
+      <div id = "typos" style="margin-right:-10px; margin-top:-325px; float:right;">
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">10</div>
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">4</div>
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">2</div>
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">8</div>
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">6</div>
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">1</div>
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">7</div>
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">9</div>
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">3</div>
+        <div id="play" class="button" style="width:25px; height:18px; background-color:#777;">5</div>
+      </div-->
+
+    <!--p class="greeting-id">The ID is </p>
+    <p class="greeting-content">The content is </p-->
+    <div id="overlay2">
+      <div>
+        <div class="pong-loader"></div>
+        <p style="color:#fff; margin-top: calc(50% - 55px); margin-left:calc(50% - 130px);">CARGANDO SUS CREDITOS</p>
+      </div>
+    </div>
+
+  <script type="text/javascript">
+
+    document.getElementById("lines").style.visibility = "visible";/*
+    document.getElementById("dos").style.visibility = "hidden";
+    document.getElementById("tres").style.visibility = "hidden";
+    document.getElementById("cuatro").style.visibility = "hidden";
+    document.getElementById("cinco").style.visibility = "hidden";
+    document.getElementById("seis").style.visibility = "hidden";
+    document.getElementById("siete").style.visibility = "hidden";
+    document.getElementById("ocho").style.visibility = "hidden";
+    document.getElementById("nueve").style.visibility = "hidden";
+    document.getElementById("diez").style.visibility = "hidden";*/
+  </script>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/Fairy.js"></script>
+  <script type="text/javascript">
+
+    $('#back').click(function(){
+      console.log("AQUI");
+      window.history.back();
+    });
+
+    $('#reload').click(function(){
+      window.location.reload();
+    });
+
+    var miid = "";
+    /*var user = $('#usuario').val();
+      $('#setId').click(function() {
+        user = $('#usuario').val();
+        console.log("MYUSR"+user);
+          var url = 'http://casino.local/myuser/'+user+'/';
+          //$("#overlay2").fadeOut(1500);
+          $.ajax({
+              url:url,
+              header: {"Access-Control-Allow-Origin": "*"},
+              dataType:'JSON',
+              type: 'GET',
+              success:    function(data) {
+                  $('#credits').text(data.credits);
+                  $("#overlay2").fadeOut(1500);
+              }, error: function(jqXHR){
+                  console.log(jqXHR.readyState);
+                  //$('#messages').text("Verifique su conexión e intente de nuevo");
+                  //alert("Error de conexión!");
+                  $("#overlay2").fadeOut(1500);
+              }
+          });
+      });*/
+      $(document).ready(function(){
+          
+          
+          var lineas = $("#lineas").text();
+          if (lineas==10) {
+            $("#lineMore").prop('disabled',true);
+            $("#lineMore").removeClass("button-default");
+            $("#lineMore").addClass("button-disable");
+          }
+          var bet = $("#bet").text();
+          if (bet == 1) {
+            $("#betMinus").prop('disabled',true);
+            $("#betMinus").removeClass("button-default");
+            $("#betMinus").addClass("button-disable");
+          };
+          $("#totalBet").text(lineas*bet);
+
+          $("#overlay2").fadeOut(1500);
+
+          miid = window.localStorage.getItem("idDevice");
+          $.ajax({
+            url: "http://casino.local/getDevice",
+            type: 'POST',
+            dataType: 'JSON',
+            contentType: 'application/json',
+            data: JSON.stringify({"device":miid}),
+            success: function(data){
+              $('#credits').text(data.credits);
+              $("#overlay2").fadeOut(1500);
+            },
+            error: function(jqXHR){
+              alert("Error conectando con los creditos del usuario!", jqXHR);
+            }
+          });
+
+          /*var url = 'http://casino.local/myuser/'+$('#userid').val()+'/';
+          //$("#overlay2").fadeOut(1500);
+          $.ajax({
+              url:url,
+              header: {"Access-Control-Allow-Origin": "*"},
+              dataType:'JSON',
+              type: 'GET',
+              success:    function(data) {
+                  $('#credits').text(data.credits);
+                  $("#overlay2").fadeOut(1500);
+              }, error: function(jqXHR){
+                  console.log(jqXHR.readyState);
+                  //$('#messages').text("Verifique su conexión e intente de nuevo");
+                  //alert("Error de conexión!");
+                  $("#overlay2").fadeOut(1500);
+              }
+          });*/
+
+      });
+  </script>
+  <script type="text/javascript">
+  //$(function() { SlotGame(123456); });
+    var miid = window.localStorage.getItem("idDevice");
+    var idUser = ""
+    $.ajax({
+      url: "http://casino.local/getDevice",
+      type: 'POST',
+      dataType: 'JSON',
+      contentType: 'application/json',
+      data: JSON.stringify({"device":miid}),
+      success: function(data){
+        idUser = data.user;
+        $(function() { SlotGame(idUser); });
+      },
+      error: function(jqXHR){
+        alert("Error conectando con los creditos del usuario!");
+      }
+    });
+  </script>
+</body>
+</html>

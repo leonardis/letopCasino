@@ -1,0 +1,43 @@
+{
+    "com-badrit-macaddress": {
+        "source": {
+            "type": "registry",
+            "id": "com-badrit-macaddress"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "in.edelworks.sharedpreferences": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/edelworksgithub/SharedPreferences.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-whitelist": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-whitelist"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "org.apache.cordova.media": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.media"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "org.apache.cordova.file": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.file"
+        },
+        "is_top_level": false,
+        "variables": {}
+    }
+}

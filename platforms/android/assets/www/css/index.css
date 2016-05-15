@@ -1,0 +1,52 @@
+html, body{
+	height: 100%;
+	font-family: 'Slackey';
+	background-color: #4A148C;
+}
+
+div{
+	text-align: center;
+}
+
+a{
+	text-decoration: none;
+	color: white;
+	font-size: 20px;
+	text-shadow: 3px 2px 0px rgba(88, 113, 201, 0.89);
+}
+
+#book{
+	width: 315px;
+	margin-left: 100px;
+	margin-top: 60px;
+}
+
+a img{
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.16), 0px 2px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+#spy{
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 315px;
+	margin-right: 100px;
+	margin-top: 60px;
+}
+
+#alca{
+	position: absolute;
+	bottom: 0;
+	width: 315px;
+	margin-left: 100px;
+	margin-bottom: 60px;
+}
+
+#far{
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 315px;
+	margin-right: 100px;
+	margin-bottom: 60px;
+}

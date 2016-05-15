@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html style="height:100%">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>Tragaperras Casino</title>
+
+  <link href="css/font.css" rel='stylesheet' type='text/css'/>
+  <link href="css/index.css" rel='stylesheet' type='text/css'/>
+  <script type="text/javascript" charset="utf-8" src="js/cordova.js"></script>
+  <script type="text/javascript" charset="utf-8" src="js/sharedp.js"></script>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+<body> 
+  <div id="book">
+    <a id="bookofraClick1" onclick="bookofraClick();">Book Of Ra</a>
+    <a id="bookofraClick2" onclick="bookofraClick();">
+      <img src="img/book_Capture.png" style="width:315px;">
+    </a>
+    
+  </div>
+
+  <div id="spy" style="float:left; cursor:pointer;">
+    <a id="spyClick1" onclick="spyClick();">SpyGame</a>
+    <a id="spyClick2" onclick="spyClick();">
+      <img src="img/spy_Capture.png" style="width:315px;">
+    </a>
+    
+  </div>
+
+  <div id="alca" style="float:right; cursor:pointer;">
+    <a id="alcaClick1" onclick="alcaClick();">Escape from Alcatraz</a>
+    <a id="alcaClick2" onclick="alcaClick();">
+      <img src="img/alca_Capture.png" style="width:315px;">
+    </a>
+    
+  </div>
+
+  <div id="far" style="float:left; cursor:pointer;">
+    <a id="farClick1" onclick="farClick();">Fairy Land</a>
+    <a id="farClick2" onclick="farClick();">
+      <img src="img/fay_Capture.png" style="width:315px;">
+    </a>
+    
+  </div>
+
+  <div id="data_info">
+    <p id="user_name">Nombre</p>
+    <p id="user_credits">0</p>
+  </div>
+
+  <script type="text/javascript">
+    var firstTime = window.localStorage.getItem("firstTime"); 
+
+    function bookofraClick(){
+      if ($('#user_name').text()=="admin" || $('#user_credits').text()==0) {
+        alert("El usuario no puede acceder al juego");
+      }else{
+        document.getElementById("bookofraClick1").href= "bookofra.html";
+        document.getElementById("bookofraClick2").href= "bookofra.html";
+      }
+    };
+
+    function spyClick(){
+      if ($('#user_name').text()=="admin" | $('#user_credits').text()==0) {
+        alert("El usuario no puede acceder al juego");
+      }else{
+        document.getElementById("spyClick1").href= "spy.html";
+        document.getElementById("spyClick2").href= "spy.html";
+      }
+    };
+
+    function alcaClick(){
+      if ($('#user_name').text()=="admin" | $('#user_credits').text()==0) {
+        alert("El usuario no puede acceder al juego");
+      }else{
+        document.getElementById("alcaClick1").href= "alcatraz.html";
+        document.getElementById("alcaClick2").href= "alcatraz.html";
+      }
+    };
+
+    function farClick(){
+      if ($('#user_name').text()=="admin" | $('#user_credits').text()==0) {
+        alert("El usuario no puede acceder al juego");
+      }else{
+        document.getElementById("farClick1").href= "fairy.html";
+        document.getElementById("farClick2").href= "fairy.html";
+      }
+    };
+
+    //alert(firstTime);
+    $(function (){
+      $(document).ready(function(){
+        if (firstTime==="" || firstTime==null) {
+          window.localStorage.setItem("firstTime", "1");
+          alert("Parece que es primera vez que utliza este dispositivo, procederemos a guardarlo en el servidor!");
+          setDevice();
+        }else{
+          requestDevice();
+        }
+      });
+
+      function setDevice(){
+        var miid = (Math.random()*0xFFFFFF<<0).toString(16);
+        window.localStorage.setItem("idDevice", miid);
+        $.ajax({
+          url: "http://casino.local/setDevice",
+          type: 'POST',
+          dataType: 'JSON',
+          contentType: 'application/json',
+          data: JSON.stringify({"user":"1", "name":"dispositivo", "miid":miid}),
+          success: function(data){
+            //alert(data.info);
+            requestDevice();
+          },
+          error: function(jqXHR){
+            alert("ERROR "+jqXHR.status);
+          }
+        });
+      }
+
+      function requestDevice(){
+        //alert("POR REQUEST");
+        var miid = window.localStorage.getItem("idDevice");
+        setInterval(function(){
+          $.ajax({
+            url: 'http://casino.local/getDevice',
+            dataType:'JSON',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({"device":miid}),
+            success:    function(data) {
+              //alert(data.user);
+              $("#user_name").text(data.name);
+              $("#user_credits").text(data.credits);
+            }, error: function(jqXHR){
+              alert("Error consiguiendo los creditos!"+jqXHR);
+              console.log(jqXHR);
+            }
+          });
+        }, 2000);
+      }
+
+    });
+  </script>
+
+
+</body>
+</html>
